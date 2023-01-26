@@ -1,0 +1,43 @@
+#!/bin/bash
+
+source /home/east/bin/scripts.sh
+
+print_help() {
+    wprint "Usage: ytrecr [x]"
+    wprint "Clicks on the xth recommended video in the right pane"
+    echo
+    wprint "Note that youtube sometimes changes the format for various purposes, so it may not work exactly right in non-usual cases. It also will not work for a live chat, so don't try it then, nor will it scroll, so don't try anything past the first 6 or so."
+    return
+}
+
+while [ -n "${1+x}" ]; do
+  case "$1" in
+    -h|--help)
+      print_help
+      exit 0
+      ;;
+    *)
+      break
+        ;;
+    esac
+done
+
+# Chooses from the videos on the right side of the yt recommendations list
+# Videos are 1-indexed (top video is `ytrecr 1` and so on)
+# Note: doesn't scroll down the page, so beyond ~6 recs, you're out of luck.
+# Note: You're also fucked if there's a live chat, sry dude.
+if [ "$#" == 1 ]; then
+    margin=300    
+    vscale=105
+    y=$((margin + $1 * vscale))
+    mm 1400 "$y";
+    make_yt_windowed
+    c
+    sleep 4;
+    make_yt_fullscreen
+else
+    echo "No argument provided"
+    echo
+    print_help
+    exit 1
+fi

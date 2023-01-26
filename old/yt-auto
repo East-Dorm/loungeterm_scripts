@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+
+source /home/east/bin/scripts.sh
+
+make_yt_fullscreen
+mm 1700 1050
+c

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+link="$*"
+
+ct;
+sleep .1;
+yt "$link"

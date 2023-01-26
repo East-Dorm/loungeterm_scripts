@@ -1,0 +1,24 @@
+#!/bin/bash
+if [[ "$#" == 0 ]] ; then
+	echo "Please provide a search query, a netflix ID (e.g. netflix.com/watch/<ID>), or a Netflix URL."
+else
+    if [[ "$1" =~ ^http ]] ; then
+        echo "Going to '$1'"
+        ff "$1"
+    elif [[ "$1" =~ ^[0-9]*$ ]] ; then
+        echo "Going to 'https://www.netflix.com/watch/$1'"
+        ff "https://www.netflix.com/watch/$1"
+    else
+        echo "Searching for $*"
+        link="https://www.netflix.com/search?q=$*"
+        ff "$link"
+        sleep 4
+        mm 250 450
+        c
+    fi
+    sleep 4
+    k f
+    echo "Getting a netflix login screen? Log in using:"
+    echo "netflix-login email@email.com password"
+    echo "Then, retry this command."
+fi

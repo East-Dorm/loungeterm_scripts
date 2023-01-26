@@ -1,0 +1,10 @@
+#!/bin/bash
+# adds a yt request to a queue
+
+# create the queue file
+QFILE="/home/east/yt_queue"
+LOCKFILE="/home/east/yt_queue_lockfile"
+
+touch $QFILE
+
+flock -n "$LOCKFILE" ytq_locked "$@"

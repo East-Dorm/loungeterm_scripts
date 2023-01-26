@@ -1,0 +1,10 @@
+#!/bin/bash
+
+deltapercent="$1"
+
+[[ -z $deltapercent ]] && deltapercent=15
+
+for _ in $(seq 1 $deltapercent); do
+	vu 1
+	sleep 1
+done

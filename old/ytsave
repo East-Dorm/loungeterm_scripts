@@ -1,0 +1,6 @@
+#!/bin/bash
+{
+set -euo pipefail
+cd /tmp
+youtube-dl "ytsearch1:$*" --id --download-archive downloaded.txt -q -f 'bestvideo+bestaudio'
+} &

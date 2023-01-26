@@ -1,0 +1,17 @@
+#!/bin/bash
+
+link="$*"
+
+# if firefox is already open it takes 
+# less time to open a new tab
+sleeptime=10
+if pgrep firefox; then
+  sleeptime=6
+fi
+
+( ff "$link"
+sleep "$sleeptime"
+k f ) &
+
+sleep 2
+k 0

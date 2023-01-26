@@ -1,0 +1,99 @@
+#!/usr/bin/php
+<?php
+system("stty -icanon");                                  // Enable shell input
+system("stty -echo");                                    // Disable characters printing
+echo "\e[?1003h\e[?1015h\e[?1006h";                      // Mouse trap all, urxvt, SGR1006  
+
+function shutdown(){                                     // Cleaning before quiting
+    echo "\e[?1003l\e[?1015l\e[?1006l";                  // Disable mouse trap
+    system("stty echo");                                 // Enable back characters printing
+    exit;
+}
+register_shutdown_function("shutdown");                  // Handle regular END of script
+
+declare(ticks = 1);                                      // Allow posix signal handling
+pcntl_signal(SIGINT,"shutdown");                         // Catch SIGINT (CTRL+C)   
+
+$ESCAPE_SEQUENCES = array(
+	"" => "Escape",
+);
+
+function keyify($key) {
+	print $key;
+	if ($key === " ") {
+		return "space";
+	}
+	if (preg_match("/[a-zA-Z0-9`~!@#$%^&*()_+-=;':,<.>|?]/i", $key)) {
+		return $key;
+	}
+	if (ord($key) === 27) {
+		if (strlen($key) === 1) {
+			return "Escape";
+		}
+		$key = substr($key, 1);
+		print "'".$key."'";
+		if (array_key_exists($key, $ESCAPE_SEQUENCES)) {
+			print "Known escape sequence :)\n";
+			return $ESCAPE_SEQUENCES[$key];
+		}
+		print "Unknown escape sequence :(\n";
+	}
+	print "Unknown key: ";
+	for ($i = 0; $i < strlen($key); $i++) {
+		print ord($key[$i]);
+		if ($i < strlen($key)-1) {
+			print(",");
+		}
+	}
+	print "\n";
+	return "Escape";
+}
+
+$KEY = "";
+while ($KEY = fread(STDIN,16)) {
+  $prior = explode("<",$KEY);
+  if (count($prior) < 2)
+  {
+    shell_exec("k ".keyify($prior[0]));
+    continue;
+  }
+  $e = explode(";",$prior[1]);
+
+  if ($e[0] === "0" && count($e) > 2 && substr($e[2],-1) === "M"){
+     //echo "BUTTON DOWN, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+     shell_exec("c");
+  }
+  /*
+  if ($e[0] === "0" && substr($e[2],-1) === "m"){
+     //echo "BUTTON UP, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+  }
+   */
+  if ($e[0] === "64"){
+     //echo "WHEEL SCROLL UP, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+     shell_exec("c 4");
+  }
+  if ($e[0] === "65"){
+     //echo "WHEEL SCROLL DOWN, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+     shell_exec("c 5");
+  }
+  /*
+  if ($e[0] === "1" && substr($e[2],-1) === "M"){
+     //echo "WHEEL BUTTON DOWN, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+     shell_exec("c 2");
+  }
+  if ($e[0] === "1" && substr($e[2],-1) === "m"){
+     //echo "WHEEL BUTTON UP, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+  }
+   */
+  if ($e[0] === "35" && count($e) > 2){
+     // echo "MOUSE MOVE, LINE ".substr($e[2],0,-1)." COLUMN ".$e[1]."\n"; 
+     $y = intval(substr($e[2],0,-1));
+     $x = intval($e[1]);
+     $num_lines = intval(shell_exec("tput lines"));
+     $num_cols = intval(shell_exec("tput cols"));
+     $mouse_x = $x * 1920 / $num_cols;
+     $mouse_y = $y * 1080 / $num_lines;
+     shell_exec("mm ".strval($mouse_x)." ".strval($mouse_y));
+  }
+
+}

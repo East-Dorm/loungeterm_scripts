@@ -1,0 +1,151 @@
+#!/bin/bash
+# Queue management script
+# Should only be called by ytq (invoke that command)
+
+source /home/east/bin/scripts.sh
+
+set -euo pipefail
+
+QFILE="/home/east/yt_queue"
+
+ARGS=''
+op=''
+HELP=''
+
+queue_append() {
+  if [ -n "$HELP" ]; then
+    echo "Usage: ytq append <video>"
+    wprint "    Append the given video to the queue"
+    return
+  fi
+  echo "$*" >> "$QFILE"
+}
+queue_next() {
+  if [ -n "$HELP" ]; then
+    echo "Usage: ytq next"
+    wprint "    Play the next video in the queue"
+    return
+  fi
+  if [ ! -f $QFILE ]; then
+    echo "Queue Is Empty :("
+  else
+    if [[ $(wc -l <$QFILE) -gt 0 ]]; then
+      # close the current tab (assume done playing the previous song)
+      # only do this if firefox is running
+      if (pgrep firefox &> /dev/null); then
+        sleep 0.1
+        ct
+      fi
+      sleep 0.1
+      # Get the first line from the queuefile
+      ytrequest=$(head -n 1 $QFILE)
+      # remove the first line from the queue with sed
+      sed -i '1d' $QFILE
+      # yt it
+      yt "$ytrequest"
+    else
+      echo "Queue Is Empty :("
+    fi
+  fi
+}
+queue_peek() {
+  if [ -n "$HELP" ]; then
+    echo "Usage: ytq peek"
+    wprint "    Display the next video to be played in the terminal"
+    return
+  fi
+  if [ -f $QFILE ]; then
+    queue="$(head -n1 $QFILE)"
+    if [ -z "$queue" ]; then
+      echo "Empty queue"
+    else
+      echo "$queue"
+    fi
+  else
+    echo "Empty queue"
+  fi
+}
+queue_skip() {
+  if [ -n "$HELP" ]; then
+    echo "Usage: ytq skip"
+    wprint "    Remove the next video from the queue, without playing it"
+    return
+  fi
+  if [ ! -f $QFILE ]; then
+    echo "Queue Is Empty :("
+  else
+    if [[ $(wc -l <$QFILE) -gt 0 ]]; then
+      # remove the first line from the queue with sed
+      sed -i '1d' $QFILE
+    else
+      echo "Queue Is Empty :("
+    fi
+  fi
+}
+queue_view() {
+  if [ -n "$HELP" ]; then
+    echo "Usage: ytq view"
+    wprint "    Display the contents of the queue, in order, in the terminal"
+    return
+  fi
+  if [ -f $QFILE ]; then
+    queue="$(cat $QFILE)"
+    if [ -z "$queue" ]; then
+      echo "Empty queue"
+    else
+      cat $QFILE
+    fi
+  else
+    echo "Empty queue"
+  fi
+}
+
+queue_clear() {
+  if [ -n "$HELP" ]; then
+    echo "Usage: ytq clear"
+    wprint "    Clears the contents of the queue"
+    return
+  fi
+  echo "" > $QFILE
+}
+
+print_help() {
+  echo "ytq commands:"
+  echo "    ytq append - Append a video to the queue"
+  echo "    ytq clear  - Clear the contents of the queue"
+  echo "    ytq next   - Play the next video in the queue"
+  echo "    ytq peek   - Output the next video in the queue in the terminal"
+  echo "    ytq skip   - Drop the next video in the queue without playing it"
+  echo "    ytq view   - Output the contents of the queue in the terminal"
+  echo "Run ytq <command> --help for more information"
+}
+
+while [ -n "${1+x}" ]; do
+  case "$1" in
+    -h|--help) HELP=1 ; shift 1 ;;
+    append) op='append'; shift 1 ;;
+    clear) op='clear'; shift 1 ;;
+    next) op='next'; shift 1 ;;
+    peek) op='peek'; shift 1 ;;
+    skip) op='skip'; shift 1 ;;
+    view) op='view'; shift 1 ;;
+    *) ARGS="$*"; shift $# ;;
+  esac
+done
+if [ -z "$op" ]; then
+  if [ -n "$HELP" ]; then
+    print_help
+    exit 0
+  fi
+  op='append'
+fi
+# shellcheck disable=2086
+case "$op" in
+  append) queue_append $ARGS ;;
+  clear) queue_clear $ARGS ;;
+  next) queue_next $ARGS ;;
+  peek) queue_peek $ARGS ;;
+  skip) queue_skip $ARGS ;;
+  view) queue_view $ARGS ;;
+  *) echo "ytq broke (op=$op); complain to your local tech-savvy eastie"; exit 2 ;;
+esac

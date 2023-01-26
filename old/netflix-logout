@@ -1,0 +1,4 @@
+#!/bin/bash
+ff https://www.netflix.com/SignOut
+sleep 1
+ct

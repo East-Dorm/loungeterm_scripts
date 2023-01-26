@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $'as\nas' | cec-client -s -d 1

@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ -n "${1+x}" ]; then
+	COUNT="$1"
+else
+	COUNT="1"
+fi
+# We actually want word splitting on the $(...) bit
+# shellcheck disable=SC2046
+DISPLAY=:0 xdotool search --onlyvisible --class Firefox key $(for ((i=0; i<$COUNT;++i)); do echo -n "ctrl+F4 "; done)

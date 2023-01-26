@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ "$#" == 2 ]; then
+    netflix-logout
+    sleep 1
+    
+    ff https://www.netflix.com/login
+    sleep 4
+
+    # type in user
+    k Tab
+    sleep .2
+    k Tab
+    sleep .2
+    kstr "$1"
+
+    # type in pass
+    k Tab
+    kstr "$2"
+    sleep 2
+    k Return
+    sleep 4
+
+    # select first profile
+    k Tab
+    sleep .1
+    k Tab
+    sleep .2
+    k Return
+
+    # close tab
+    sleep 2
+    ct
+else
+	echo "Command expects two arguments: email, then password"
+fi

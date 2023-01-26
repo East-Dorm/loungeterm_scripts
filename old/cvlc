@@ -1,0 +1,4 @@
+#!/bin/bash
+
+SESSION_NAME=VLC
+DISPLAY=:0 tmux new -As "$SESSION_NAME" /usr/bin/vlc -I rc "$@" vlc://quit
