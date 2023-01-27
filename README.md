@@ -66,3 +66,7 @@ https://www.semicomplete.com/projects/xdotool/xdotool.xhtml and some examples
 are at http://tuxradar.com/content/xdotool-script-your-mouse (although the man
 page is in general super helpful, and that example page has some mistakes on
 it).
+
+
+### TV Control CEC Commands
+Reverse engineered using: https://www.cec-o-matic.com/

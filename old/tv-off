@@ -1,3 +1,0 @@
-#!/bin/bash
-
-echo 'standby 3' | cec-client -s -d 1

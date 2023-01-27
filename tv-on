@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "tx 10:44:40" | cec-client -s -d 1
