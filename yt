@@ -5,11 +5,11 @@ link="$*"
 # if firefox is already open it takes 
 # less time to open a new tab
 sleeptime=10
-if pgrep firefox; then
+if pgrep chrome; then
   sleeptime=6
 fi
 
-( ff "$link"
+( browser "$link"
 sleep "$sleeptime"
 k f ) &
 

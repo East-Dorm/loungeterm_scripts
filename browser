@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+
+# if the "link" doesn't start with http, see if it's one of the standard sites
+# or search youtube and pick first result
+if ! [[ "$1" =~ ^http ]] ; then
+  case "$1" in
+    bf1) link="https://www.youtube.com/watch?v=twQlpFrm5iM" ;;
+    gostore) link="https://www.youtube.com/watch?v=iRZ2Sh5-XuM" ;;
+    bfish) link="http://breadfish.co.uk/" ;;
+    zombocom) link="https://html5zombo.com/" ;;
+    hey) link="https://www.youtube.com/watch?v=ZZ5LpwO-An4" ;;
+    boxcar) link="http://boxcar2d.com/" ;;
+    puzzlehunt) link="https://www.youtube.com/watch?v=DjwazOreWwg" ;;
+    yee) link="https://www.youtube.com/watch?v=q6EoRBvdVPQ" ;;
+    kyra) link="https://www.youtube.com/watch?v=4qwLQe4Qi9k" ;;
+    soup) link="https://www.youtube.com/watch?v=r_o2hhSgfJ8" ;;
+    music) link="https://youtu.be/iKnwVvXkWq0" ;;
+    porn) link="https://www.youtube.com/watch?v=LD24TG33w2E" ;; 
+    *) link=$(yt_search.sh "$*") ;;
+  esac
+else
+  link="$1"
+fi
+
+# TODO(msheely, mhoward) Replace existing youtube tab rather than open a new one
+
+echo "$link"
+DISPLAY=:0 chromium "$link" &>/dev/null &

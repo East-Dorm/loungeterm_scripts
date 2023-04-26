@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/east/bin/scripts.sh
+source ./scripts.sh
 
 sinkname=$(getsinkname)
 

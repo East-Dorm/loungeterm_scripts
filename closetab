@@ -8,4 +8,4 @@ else
 fi
 # We actually want word splitting on the $(...) bit
 # shellcheck disable=SC2046
-DISPLAY=:0 xdotool search --onlyvisible --class Firefox key $(for ((i=0; i<$COUNT;++i)); do echo -n "ctrl+F4 "; done)
+DISPLAY=:0 xdotool search --onlyvisible --class Chromium key $(for ((i=0; i<$COUNT;++i)); do echo -n "ctrl+F4 "; done)
