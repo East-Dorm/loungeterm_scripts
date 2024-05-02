@@ -17,6 +17,8 @@ if ! [[ "$1" =~ ^http ]] ; then
     soup) link="https://www.youtube.com/watch?v=r_o2hhSgfJ8" ;;
     music) link="https://youtu.be/iKnwVvXkWq0" ;;
     porn) link="https://www.youtube.com/watch?v=LD24TG33w2E" ;; 
+    missile) link="https://www.youtube.com/watch?v=_LjN3UclYzU" ;; 
+    anode) link="https://youtu.be/WOSpqoIqhZM" ;;
     *) link=$(yt_search.sh "$*") ;;
   esac
 else
