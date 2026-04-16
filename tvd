@@ -1,0 +1,27 @@
+#!/bin/bash
+# TV Volume Down (lowers media box volume through CEC)
+
+deltapercent="$1"
+
+[[ -z $deltapercent ]] && deltapercent=5
+
+#NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
+
+#if (( NOW+deltapercent > 100 )); then
+#    echo "Please increase the volume on the amplifier";
+#    pactl set-sink-mute "$sinkname" 0
+#    pactl set-sink-volume "$sinkname" 100%
+#else
+#    pactl set-sink-mute "$sinkname" 0
+#    pactl set-sink-volume "$sinkname" +$deltapercent%
+#fi
+
+#NOW=$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' )
+
+#echo "Volume: $NOW%"
+
+(for ((i=1; i<$deltapercent; i++)); do echo "tx 05:44:42" && sleep 0.01; done; echo "q") | stdbuf -oL cec-client -d 8 | stdbuf -oL grep ">> 50:7a" | stdbuf -oL sed -E "s/.*50:7a:/0x/g"
+
+(echo "tx 05:44:42" && sleep 2.0 && echo "q") | cec-client -d 8 | grep ">> 50:7a" | sed -u -E "s/.*50:7a:/0x/g" | xargs stdbuf -oL printf "Final volume: %d\x25\n"
+
+#echo "hi" && echo $FINAL_VOLUME_HEX
