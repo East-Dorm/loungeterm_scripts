@@ -3,7 +3,7 @@ set -euo pipefail
 
 # if the "link" doesn't start with http, see if it's one of the standard sites
 # or search youtube and pick first result
-if ! [[ "$1" =~ ^http ]] ; then
+if ! [[ "$1" =~ ^http|^magnet ]] ; then
   case "$1" in
     bf1) link="https://www.youtube.com/watch?v=twQlpFrm5iM" ;;
     gostore) link="https://www.youtube.com/watch?v=iRZ2Sh5-XuM" ;;
@@ -19,6 +19,11 @@ if ! [[ "$1" =~ ^http ]] ; then
     porn) link="https://www.youtube.com/watch?v=LD24TG33w2E" ;; 
     missile) link="https://www.youtube.com/watch?v=_LjN3UclYzU" ;; 
     anode) link="https://youtu.be/WOSpqoIqhZM" ;;
+    rainbow) link="https://youtu.be/4GaGnU8Ij2Y" ;;
+    vegetables) link="https://youtu.be/PunVHiOxUEk";;
+    god) link="https://youtu.be/OO6YTmAmU0U?list=PLvII_8We3lxtXjFLFoW-CVBO43WyLn44Q";;
+    bell) link="https://youtu.be/Of9yvKINITg";;
+    chicken) link="https://www.youtube.com/watch?v=miomuSGoPzI&list=PL8JttaK4Km_GBOZdL6IN2yt07rsPKiXGQ&index=1";;
     *) link=$(yt_search.sh "$*") ;;
   esac
 else
@@ -28,4 +33,4 @@ fi
 # TODO(msheely, mhoward) Replace existing youtube tab rather than open a new one
 
 echo "$link"
-DISPLAY=:0 chromium "$link" &>/dev/null &
+WAYLAND_DISPLAY=wayland-0 firefox "$link" &>/dev/null &

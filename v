@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ./scripts.sh
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source $SCRIPT_DIR/scripts.sh
 
 sinkname=$(getsinkname)
 

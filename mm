@@ -1,2 +1,2 @@
 #!/bin/bash
-DISPLAY=:0 xdotool mousemove "$@"
+WAYLAND_DISPLAY=wayland-0 ydotool mousemove -a "$@"

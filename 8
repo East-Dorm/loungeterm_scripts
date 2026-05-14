@@ -1,0 +1,76 @@
+DEBUG:   [               9]	Broadcast (F): osd name set to 'Broadcast'
+DEBUG:   [               9]	connection opened, clearing any previous input and waiting for active transmissions to end before starting
+DEBUG:   [              14]	communication thread started
+DEBUG:   [             126]	usbcec: enabling controlled mode
+NOTICE:  [             298]	connection opened
+DEBUG:   [             298]	<< Broadcast (F) -> TV (0): POLL
+TRAFFIC: [             298]	<< f0
+DEBUG:   [             298]	usbcec: updating line timeout: 3
+DEBUG:   [             298]	processor thread started
+DEBUG:   [             440]	>> POLL sent
+DEBUG:   [             440]	TV (0): device status changed into 'present'
+DEBUG:   [             440]	<< requesting vendor ID of 'TV' (0)
+TRAFFIC: [             440]	<< f0:8c
+TRAFFIC: [             658]	>> 0f:87:8a:c7:2e
+DEBUG:   [             658]	TV (0): vendor = Unknown (8ac72e)
+DEBUG:   [             658]	>> TV (0) -> Broadcast (F): device vendor id (87)
+DEBUG:   [             658]	expected response received (87: device vendor id)
+DEBUG:   [             658]	registering new CEC client - v6.0.2
+DEBUG:   [             713]	usbcec: autonomous mode = enabled
+DEBUG:   [             769]	usbcec: logical address = Recorder 1
+DEBUG:   [             824]	usbcec: device type = recording device
+DEBUG:   [             829]	usbcec: logical address mask = 206
+DEBUG:   [             901]	usbcec: physical address = 1400
+DEBUG:   [             957]	usbcec: CEC version = 1.4
+DEBUG:   [             957]	SetClientVersion - using client version '6.0.2'
+NOTICE:  [             957]	setting HDMI port to 1 on device TV (0)
+DEBUG:   [             957]	SetConfiguration: double tap timeout = 200ms, repeat rate = 0ms, release delay = 500ms
+DEBUG:   [             957]	detecting logical address for type 'recording device'
+DEBUG:   [             957]	trying logical address 'Recorder 1'
+DEBUG:   [             957]	<< Recorder 1 (1) -> Recorder 1 (1): POLL
+TRAFFIC: [             957]	<< 11
+DEBUG:   [            1042]	CEC transmission - received response - TRANSMIT_FAILED_ACK
+TRAFFIC: [            1042]	<< 11
+DEBUG:   [            1128]	CEC transmission - received response - TRANSMIT_FAILED_ACK
+DEBUG:   [            1128]	>> POLL not sent
+DEBUG:   [            1128]	using logical address 'Recorder 1'
+DEBUG:   [            1128]	Recorder 1 (1): device status changed into 'handled by libCEC'
+DEBUG:   [            1128]	Recorder 1 (1): power status changed from 'unknown' to 'on'
+DEBUG:   [            1128]	Recorder 1 (1): vendor = Pulse Eight (001582)
+DEBUG:   [            1128]	Recorder 1 (1): CEC version 1.4
+DEBUG:   [            1128]	AllocateLogicalAddresses - device '0', type 'recording device', LA '1'
+DEBUG:   [            1128]	usbcec: updating ackmask: 0002
+DEBUG:   [            1183]	Recorder 1 (1): osd name set to 'CECTester'
+DEBUG:   [            1183]	Recorder 1 (1): menu language set to 'eng'
+DEBUG:   [            1183]	GetPhysicalAddress - trying to get the physical address via ADL
+DEBUG:   [            1183]	GetPhysicalAddress - ADL returned physical address 0000
+DEBUG:   [            1183]	GetPhysicalAddress - trying to get the physical address via nvidia driver
+DEBUG:   [            1183]	GetPhysicalAddress - nvidia driver returned physical address 0000
+DEBUG:   [            1183]	GetPhysicalAddress - trying to get the physical address via drm files
+DEBUG:   [            1183]	GetPhysicalAddress - drm files returned physical address 1400
+DEBUG:   [            1183]	using auto-detected physical address 1400
+DEBUG:   [            1183]	Recorder 1 (1): physical address changed from ffff to 1400
+DEBUG:   [            1183]	<< Recorder 1 (1) -> broadcast (F): physical address 1400
+TRAFFIC: [            1183]	<< 1f:84:14:00:01
+NOTICE:  [            1350]	CEC client registered: libCEC version = 6.0.2, client version = 6.0.2, firmware version = 8, firmware build date: Fri Jul 21 09:08:24 2017 +0000, logical address(es) = Recorder 1 (1) , physical address: 1.4.0.0, compiled on Linux-5.4.0-173-generic ... , features: P8_USB, DRM, P8_detect, randr, Exynos, AOCEC
+DEBUG:   [            1350]	<< Recorder 1 (1) -> TV (0): OSD name 'CECTester'
+TRAFFIC: [            1350]	<< 10:47:43:45:43:54:65:73:74:65:72
+DEBUG:   [            1667]	<< requesting power status of 'TV' (0)
+TRAFFIC: [            1667]	<< 10:8f
+TRAFFIC: [            1727]	>> 40
+DEBUG:   [            1727]	<< POLL: Playback 1 (4) -> TV (0)
+TRAFFIC: [            1874]	>> 01:90:00
+DEBUG:   [            1874]	TV (0): power status changed from 'unknown' to 'on'
+DEBUG:   [            1874]	expected response received (90: report power status)
+DEBUG:   [            1874]	>> TV (0) -> Recorder 1 (1): report power status (90)
+DEBUG:   [            1874]	unregistering all CEC clients
+NOTICE:  [            1874]	unregistering client: libCEC version = 6.0.2, client version = 6.0.2, firmware version = 8, firmware build date: Fri Jul 21 09:08:24 2017 +0000, logical address(es) = Recorder 1 (1) , physical address: 1.4.0.0, compiled on Linux-5.4.0-173-generic ... , features: P8_USB, DRM, P8_detect, randr, Exynos, AOCEC
+DEBUG:   [            1874]	Recorder 1 (1): power status changed from 'on' to 'unknown'
+DEBUG:   [            1874]	Recorder 1 (1): vendor = Unknown (000000)
+DEBUG:   [            1874]	Recorder 1 (1): CEC version unknown
+DEBUG:   [            1874]	Recorder 1 (1): osd name set to 'Recorder 1'
+DEBUG:   [            1874]	Recorder 1 (1): device status changed into 'unknown'
+DEBUG:   [            1874]	usbcec: updating ackmask: 0000
+DEBUG:   [            1929]	usbcec: disabling controlled mode
+DEBUG:   [            1985]	unregistering all CEC clients
+DEBUG:   [            2323]	communication thread ended

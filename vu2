@@ -1,9 +1,20 @@
 #!/bin/bash
 
-source scripts.sh
-#getsinkname() {
-#    pacmd list-sinks | sed '3q;d' | sed 's/^\tname: <\(.*\)>$/\1/'
-#}
+if (( $1 > 0 )); then
+    for i in $(seq $1); do
+        k XF86AudioRaiseVolume
+    done
+else
+    for i in $(seq $(($1*-1))); do
+        k XF86AudioLowerVolume
+    done
+fi
+
+exit
+
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source $SCRIPT_DIR/scripts.sh
 
 deltapercent="$1"
 

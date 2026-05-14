@@ -1,12 +1,14 @@
 #!/bin/bash
 
-source ./scripts.sh
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source $SCRIPT_DIR/scripts.sh
 
 deltapercent="$1"
 
 [[ -z $deltapercent ]] && deltapercent=15
 
-sinkname=$(getsinkname)
+#sinkname=$(getsinkname)
+sinkname=$(pactl list sinks | grep "Sink #" | sed "s/[^#]*#//g")
 
 pactl set-sink-volume "$sinkname" -$deltapercent%
 

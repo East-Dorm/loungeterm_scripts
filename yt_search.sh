@@ -18,7 +18,8 @@ filename=/tmp/"$search_term"_results.html
 wget -O "$filename" "$yt_search_url" 2> /dev/null
 
 # Parse the results for the first URL
-yt_final_url=$(~/bin/list_video_urls.py "$filename" | head -n1)
+#yt_final_url=$(~/bin/list_video_urls.py "$filename" | head -n1)
+yt_final_url=$(~/bin/loungeterm_scripts/old/list_video_urls.py "$filename" | head -n1)
 
 # Echo url to parent process
 echo "$yt_final_url"
