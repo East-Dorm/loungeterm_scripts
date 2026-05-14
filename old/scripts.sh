@@ -6,7 +6,7 @@
 # - If not fullscreen, will be smaller (must leave space for bar at top and side)
 # Notice: if firefox is closed, will output false
 is_ff_fullscreen() {
-    dims="$(DISPLAY=:0 xdotool search --onlyvisible --name firefox getwindowgeometry | grep 'Geometry' | grep -o '[0-9]*x[0-9]*')"
+    dims="$(WAYLAND_DISPLAY=wayland-0 ydotool search --onlyvisible --name firefox getwindowgeometry | grep 'Geometry' | grep -o '[0-9]*x[0-9]*')"
     [ "$dims" = "1920x1080" ]
 }
 

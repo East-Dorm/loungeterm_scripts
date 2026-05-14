@@ -1,2 +1,2 @@
 #!/bin/bash
-DISPLAY=:0 xdotool key ctrl+Tab
+WAYLAND_DISPLAY=wayland-0 ydotool key ctrl+Tab

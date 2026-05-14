@@ -2,11 +2,11 @@
 
 if (( $1 > 0 )); then
     for i in $(seq $1); do
-        k XF86AudioRaiseVolume
+        k VolumeUp
     done
 else
     for i in $(seq $(($1*-1))); do
-        k XF86AudioLowerVolume
+        k VolumeDown
     done
 fi
 

@@ -4,4 +4,4 @@ button="$1"
 
 [[ -z $button ]] && button=1
 
-DISPLAY=:0 xdotool click "$button"
+WAYLAND_DISPLAY=wayland-0 ydotool click "$button"

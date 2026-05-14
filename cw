@@ -1,2 +1,2 @@
 #!/bin/bash
-k alt+F4
+k alt F4

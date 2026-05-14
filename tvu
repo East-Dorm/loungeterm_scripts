@@ -22,10 +22,14 @@ deltapercent="$1"
 
 #echo "Volume: $NOW%"
 
-(for ((i=1; i<$deltapercent; i++)); do echo "tx 05:44:41" && sleep 0.05 ; done; echo "q") | stdbuf -oL cec-client -d 8 | stdbuf -oL grep ">> 50:7a" | stdbuf -oL sed -E "s/.*50:7a:/0x/g"
+if (( $deltapercent > 0 )); then
+    (for ((i=0; i<$deltapercent; i++)); do echo "tx 05:44:41" && sleep 0.05 ; done; echo "q") | stdbuf -oL cec-client -d 8 | stdbuf -oL grep ">> 50:7a" | stdbuf -oL sed -E "s/.*50:7a:/0x/g" | stdbuf -oL xargs -n 1 printf "%d\x25\n"
+else
+    tvd "-$deltapercent"
+fi
 
-(echo "tx 05:44:41" && sleep 0.05 && echo "tx 05:45" && sleep 1.0 && echo "q") | cec-client -d 8 | grep ">> 50:7a" | sed -u -E "s/.*50:7a:/0x/g" | xargs stdbuf -oL printf "Final volume: %d\x25\n"
+#(echo "tx 05:44:41" && sleep 0.05 && echo "tx 05:45" && sleep 1.0 && echo "q") | cec-client -d 8 | grep ">> 50:7a" | sed -u -E "s/.*50:7a:/0x/g" | xargs stdbuf -oL printf "Final volume: %d\x25\n"
 
-echo "done"
+#echo "done"
 
 #echo "hi" && echo $FINAL_VOLUME_HEX

@@ -26,4 +26,4 @@ fi
 # TODO(msheely, mhoward) Replace existing youtube tab rather than open a new one
 
 echo "$link"
-DISPLAY=:0 firefox "$link" &>/dev/null &
+WAYLAND_DISPLAY=wayland-0 firefox "$link" &>/dev/null &
